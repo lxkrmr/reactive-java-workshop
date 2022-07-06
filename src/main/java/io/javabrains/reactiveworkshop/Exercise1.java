@@ -20,8 +20,8 @@ public class Exercise1 {
 
         System.out.println("Print the second and third numbers in intNumbersStream that's greater than 5");
         intNumbersStream().filter(i -> i > 5)
-                          .limit(3)
                           .skip(1)
+                          .limit(2)
                           .forEach(System.out::println);
 
         System.out.println("Print the first number in intNumbersStream that's greater than 5.");
@@ -40,6 +40,17 @@ public class Exercise1 {
         userStream().filter(user -> whitelistedUserIds.contains(user.getId()))
                     .map(User::getFirstName)
                     .forEach(System.out::println);
+
+        System.out.println("solution from Java Brains: https://www.youtube.com/watch?v=cSJK67USyXA");
+        intNumbersStream().flatMap(id -> userStream().filter(user -> user.getId() == id))
+                          .map(User::getFirstName)
+                          .forEach(System.out::println);
+
+        System.out.println("or by using anyMatch - which is my favorit solution");
+        userStream().filter(user -> intNumbersStream().anyMatch(id -> user.getId() == id))
+                    .map(User::getFirstName)
+                    .forEach(System.out::println);
+
 
     }
 
